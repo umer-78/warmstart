@@ -164,7 +164,7 @@ def replay(stream, vectors, setting, *, mode="full", semantic=True, seed=0, shap
                 cache.invalidate(tag="fees")
         personal = q.intent in data.PERSONAL
         if mode == "full":
-            key = Key.of(MODEL, 0.2, TOOLS, q.tier, PROMPTS[prompt], f"customer:{q.customer}" if personal else "shared")
+            key = Key.of(MODEL, 0.2, TOOLS, q.tier, PROMPTS[prompt], "shared")
         else:
             key = Key.of(MODEL)
         started = time.perf_counter()
