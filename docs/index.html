@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Warmstart: a semantic cache, measured</title>
+  <meta name="description" content="A cache in front of an LLM support assistant: exact and semantic layers, a key that keeps customers' answers apart, and a replay of 10,000 real support questions showing the hit rate, the savings and how often it was wrong.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23c2410c'/><path d='M9 17l5 5 9-12' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <style>
+    :root {
+      --bg: #faf8f5; --surface: #ffffff; --surface-2: #f4f1ec; --line: #e6e0d6; --text: #16130f; --muted: #6a6158;
+      --accent: #c2410c; --accent-soft: #fff1e8; --exact: #f59e0b; --semantic: #c2410c; --good: #067647; --bad: #b42318; --bad-soft: #fdecea;
+      --font: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; --mono: ui-monospace, "SF Mono", Menlo, monospace; color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #100e0c; --surface: #191613; --surface-2: #211d19; --line: #332d26; --text: #f3efe9; --muted: #a79d91;
+        --accent: #fb923c; --accent-soft: rgb(251 146 60 / .12); --exact: #fbbf24; --semantic: #fb923c; --good: #56d364; --bad: #ff7b72; --bad-soft: rgb(255 123 114 / .12); color-scheme: dark; }
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 15.5px/1.6 var(--font); -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px 48px; }
+    header { padding: 28px 0 8px; }
+    .crumb { font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; }
+    h1 { margin: 10px 0 6px; font-size: clamp(28px, 4.5vw, 40px); letter-spacing: -.02em; line-height: 1.1; }
+    .lede { margin: 0; max-width: 780px; color: var(--muted); font-size: 16.5px; }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .btn { display: inline-flex; align-items: center; padding: 9px 16px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font: 600 14px var(--font); text-decoration: none; }
+    .btn.primary { background: var(--accent); border-color: transparent; color: #fff; }
+    @media (prefers-color-scheme: dark) { .btn.primary { color: #100e0c; } }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-top: 20px; }
+    .kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+    .kpi .label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    .kpi .big { font-size: 28px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; margin-top: 2px; }
+    .kpi .was { font-size: 13px; color: var(--muted); }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 22px; margin-top: 18px; min-width: 0; }
+    .card h2 { margin: 0 0 6px; font-size: 18px; letter-spacing: -.01em; }
+    .card > p.sub { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+    svg { display: block; width: 100%; height: auto; overflow: visible; }
+    svg text { fill: var(--muted); font: 11px var(--font); }
+    .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-top: 8px; }
+    .legend span::before { content: ""; display: inline-block; width: 12px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+    .slider { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 6px 0 12px; }
+    input[type=range] { flex: 1 1 260px; accent-color: var(--accent); }
+    .readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; }
+    .readout div { background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px; font-size: 14px; }
+    .readout b { font-size: 20px; font-variant-numeric: tabular-nums; }
+    .scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    tr.best td { background: var(--accent-soft); font-weight: 700; }
+    tr.trap td { color: var(--bad); }
+    .pairs { display: grid; gap: 8px; }
+    .pair { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; font-size: 14px; }
+    .pair .from { color: var(--muted); font-size: 13px; }
+    .pair .sim { grid-row: span 2; align-self: center; font: 600 13px var(--mono); color: var(--accent); }
+    ul.plain { margin: 8px 0 0; padding-left: 18px; }
+    ul.plain li { margin: 5px 0; }
+    input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    footer { margin-top: 30px; color: var(--muted); font-size: 13px; text-align: center; }
+    @media (max-width: 640px) { .card { padding: 16px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="crumb" href="https://umer-78.github.io/">← All projects</a>
+      <h1>Warmstart</h1>
+      <p class="lede">A cache in front of a bank's AI support assistant, which answers 400,000 questions a month. It answers exact repeats and close paraphrases from the cache, keeps each customer's account answers to that customer, and empties itself when the prompt or the fees change. Below: 10,000 real support questions replayed through it.</p>
+      <div class="links"><a class="btn primary" href="#threshold">How wrong can it afford to be?</a><a class="btn" href="https://github.com/umer-78/warmstart">Code and method</a></div>
+    </header>
+
+    <div class="kpis" id="kpis"></div>
+
+    <section class="card" aria-labelledby="h-day">
+      <h2 id="h-day">Hit rate through the replay</h2>
+      <p class="sub">Share of each 250 questions answered from the cache. It starts cold, warms up, drops to nothing when the system prompt changes, and dips when the fee answers are invalidated.</p>
+      <div id="dayChart"></div>
+      <div class="legend"><span style="--c: var(--exact)">exact repeat</span><span style="--c: var(--semantic)">paraphrase (semantic)</span></div>
+    </section>
+
+    <section class="card" id="threshold" aria-labelledby="h-th">
+      <h2 id="h-th">How wrong can it afford to be?</h2>
+      <p class="sub">Each held-out Banking77 question answered from its nearest cached neighbour among the training questions. A hit is wrong when that neighbour wanted a different answer. Move the similarity floor and watch the trade.</p>
+      <div class="slider"><label for="t">Similarity floor</label><input id="t" type="range" min="0" max="19" step="1" value="16"><b id="tLabel"></b></div>
+      <div id="thChart"></div>
+      <div class="legend"><span style="--c: var(--muted)">similarity floor only</span><span style="--c: var(--accent)">with the agreement check</span></div>
+      <div class="readout" id="readout"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-var">
+      <h2 id="h-var">Every variant on the same 10,000 questions</h2>
+      <p class="sub">Cost and waiting times use the assumptions at the bottom of the page. The last row is the trap: keying on the question alone.</p>
+      <div class="scroll"><table id="variants"><thead><tr><th></th><th class="num">Hit rate</th><th class="num">Wrong</th><th class="num">Leaked</th><th class="num">Stale</th><th class="num">$ / 1,000</th><th class="num">p50</th><th class="num">p95</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-ex">
+      <h2 id="h-ex">Paraphrases it answered from the cache</h2>
+      <p class="sub">A sample of semantic hits from the replay, lowest similarity first: the new question, and the earlier one whose answer it got.</p>
+      <div class="pairs" id="pairs"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-wrong">
+      <h2 id="h-wrong">The wrong ones</h2>
+      <div id="wrong"></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-as">
+      <h2 id="h-as">What is measured and what is assumed</h2>
+      <ul class="plain" id="assumptions"></ul>
+    </section>
+
+    <footer>Built by <a href="https://github.com/umer-78">Umer Hashmi</a> · Questions from <a href="https://github.com/PolyAI-LDN/task-specific-datasets">Banking77</a> (PolyAI, CC BY 4.0) · Embeddings by bge-small-en-v1.5 (BAAI, MIT)</footer>
+  </div>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = (tag, attrs = {}) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); return e; };
+    const el = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) { if (k === 'class') e.className = v; else if (k === 'text') e.textContent = v; else e.setAttribute(k, v); } e.append(...kids); return e; };
+    const pct = (x, d = 1) => `${(100 * x).toFixed(d)}%`;
+    let d;
+
+    function kpis() {
+      const s = d.embedders[d.summary.best].replay;
+      const c = s.cost_per_1000, lat = s.latency_s;
+      const items = [
+        ['Answered from the cache', pct(s.hit_rate), `${pct(s.exact_rate)} exact, ${pct(s.semantic_rate)} paraphrases`],
+        ['Cost per 1,000 questions', `$${c['this cache + prefix cache'].toFixed(2)}`, `was $${c['no cache'].toFixed(2)} with no caching`],
+        ['p95 wait', `${lat.cache.p95.toFixed(2)} s`, `was ${lat['no cache'].p95.toFixed(2)} s`],
+        ['Wrong answers served', `${s.wrong_semantic} of ${d.queries.toLocaleString()}`, `${pct(s.wrong_rate, 2)} of paraphrase hits`],
+        ['Answers leaked to another customer', String(s.leaks), `keying on the question alone: ${d.summary.variants['keyed on the question alone'].leaks.toLocaleString()}`],
+      ];
+      $('kpis').replaceChildren(...items.map(([l, b, w]) => el('div', { class: 'kpi' }, el('div', { class: 'label', text: l }), el('div', { class: 'big', text: b }), el('div', { class: 'was', text: w }))));
+    }
+
+    function dayChart() {
+      const W = 1000, H = 260, P = { l: 40, r: 10, t: 10, b: 28 };
+      const s = svg('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Hit rate for each block of 250 questions' });
+      const max = 0.6, n = d.series.length;
+      const x = (i) => P.l + (i / n) * (W - P.l - P.r), y = (v) => H - P.b - (v / max) * (H - P.t - P.b);
+      for (const v of [0, 0.2, 0.4, 0.6]) { s.append(svg('line', { x1: P.l, x2: W - P.r, y1: y(v), y2: y(v), stroke: 'var(--line)' })); const t = svg('text', { x: P.l - 6, y: y(v) + 4, 'text-anchor': 'end' }); t.textContent = pct(v, 0); s.append(t); }
+      const bw = (W - P.l - P.r) / n - 2;
+      d.series.forEach((p, i) => {
+        s.append(svg('rect', { x: x(i) + 1, y: y(p.exact), width: bw, height: y(0) - y(p.exact), fill: 'var(--exact)', rx: 2 }));
+        s.append(svg('rect', { x: x(i) + 1, y: y(p.exact + p.semantic), width: bw, height: y(p.exact) - y(p.exact + p.semantic), fill: 'var(--semantic)', rx: 2 }));
+      });
+      for (const [share, label] of [[0.5, 'system prompt changed'], [0.75, 'fees changed']]) {
+        const xi = P.l + share * (W - P.l - P.r);
+        s.append(svg('line', { x1: xi, x2: xi, y1: P.t, y2: H - P.b, stroke: 'var(--text)', 'stroke-dasharray': '4 4' }));
+        const t = svg('text', { x: xi + 6, y: P.t + 12 }); t.textContent = label; s.append(t);
+      }
+      for (const i of [0, 10, 20, 30, 39]) { const t = svg('text', { x: x(i) + bw / 2, y: H - 8, 'text-anchor': 'middle' }); t.textContent = `${d.series[i].hour.toFixed(0)} h`; s.append(t); }
+      $('dayChart').replaceChildren(s);
+    }
+
+    function thresholds() {
+      const e = d.embedders[d.summary.best], st = e.setting;
+      const plain = d.curves[d.summary.best].filter((r) => r.neighbours === 1);
+      const agree = d.curves[d.summary.best].filter((r) => r.neighbours === st.neighbours && r.band === st.band);
+      const ts = plain.map((r) => r.threshold);
+      const input = $('t');
+      input.max = ts.length - 1;
+      input.value = ts.indexOf(st.threshold);
+      const W = 1000, H = 260, P = { l: 44, r: 10, t: 10, b: 28 };
+      const x = (t) => P.l + ((t - ts[0]) / (ts.at(-1) - ts[0])) * (W - P.l - P.r);
+      const ymax = 0.08, y = (v) => H - P.b - (Math.min(v, ymax) / ymax) * (H - P.t - P.b);
+      function draw() {
+        const i = Number(input.value), t = ts[i];
+        const s = svg('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Share of cache hits that were wrong at each similarity floor' });
+        for (const v of [0, 0.02, 0.04, 0.06, 0.08]) { s.append(svg('line', { x1: P.l, x2: W - P.r, y1: y(v), y2: y(v), stroke: 'var(--line)' })); const tx = svg('text', { x: P.l - 6, y: y(v) + 4, 'text-anchor': 'end' }); tx.textContent = pct(v, 0); s.append(tx); }
+        s.append(svg('line', { x1: P.l, x2: W - P.r, y1: y(0.01), y2: y(0.01), stroke: 'var(--bad)', 'stroke-dasharray': '6 4' }));
+        const gate = svg('text', { x: W - P.r, y: y(0.01) - 6, 'text-anchor': 'end' }); gate.textContent = 'ship gate: 1% wrong'; s.append(gate);
+        for (const [rows, color] of [[plain, 'var(--muted)'], [agree, 'var(--accent)']]) {
+          s.append(svg('polyline', { points: rows.map((r) => `${x(r.threshold)},${y(r.wrong_rate)}`).join(' '), fill: 'none', stroke: color, 'stroke-width': 2.5 }));
+        }
+        s.append(svg('line', { x1: x(t), x2: x(t), y1: P.t, y2: H - P.b, stroke: 'var(--text)', 'stroke-width': 1.5 }));
+        for (const tk of [0.8, 0.85, 0.9, 0.95, 0.99]) { const tx = svg('text', { x: x(tk), y: H - 8, 'text-anchor': 'middle' }); tx.textContent = tk.toFixed(2); s.append(tx); }
+        $('thChart').replaceChildren(s);
+        $('tLabel').textContent = t.toFixed(2) + (t === st.threshold ? ' (chosen)' : '');
+        const a = plain[i], b = agree[i];
+        $('readout').replaceChildren(
+          el('div', {}, 'Similarity floor only: ', el('br'), el('b', { text: pct(a.coverage) }), ' answered, ', el('b', { text: pct(a.wrong_rate, 2) }), ' of them wrong'),
+          el('div', {}, `With the agreement check (${st.neighbours} neighbours within ${st.band}): `, el('br'), el('b', { text: pct(b.coverage) }), ' answered, ', el('b', { text: pct(b.wrong_rate, 2) }), ' of them wrong'));
+      }
+      input.addEventListener('input', draw);
+      draw();
+    }
+
+    function variants() {
+      const s = d.embedders[d.summary.best].replay, v = d.summary.variants;
+      const nc = s.latency_s['no cache'];
+      const rows = [
+        ['no cache', { hit_rate: 0, wrong_semantic: '-', leaks: '-', stale: '-', cost: s.cost_per_1000['no cache'], lat: nc }],
+        ['provider prefix cache only', { hit_rate: 0, wrong_semantic: '-', leaks: '-', stale: '-', cost: s.cost_per_1000['provider prefix cache'], lat: nc }],
+        ['exact layer only', v['exact layer only']],
+        ['this cache', s, 'best'],
+        ['similarity floor, no agreement check', v['similarity floor, no agreement check']],
+        ['keyed on the question alone', v['keyed on the question alone'], 'trap'],
+      ];
+      $('variants').tBodies[0].replaceChildren(...rows.map(([name, r, cls]) => {
+        const cost = r.cost ?? r.cost_per_1000['this cache + prefix cache'];
+        const lat = r.lat ?? r.latency_s.cache;
+        const wrong = typeof r.wrong_semantic === 'number' ? `${r.wrong_semantic}/${r.semantic_hits}` : r.wrong_semantic;
+        return el('tr', cls ? { class: cls } : {}, el('td', { text: name }), el('td', { class: 'num', text: pct(r.hit_rate) }), el('td', { class: 'num', text: wrong }),
+          el('td', { class: 'num', text: String(r.leaks) }), el('td', { class: 'num', text: String(r.stale) }), el('td', { class: 'num', text: `$${cost.toFixed(2)}` }),
+          el('td', { class: 'num', text: `${lat.p50.toFixed(2)} s` }), el('td', { class: 'num', text: `${lat.p95.toFixed(2)} s` }));
+      }));
+    }
+
+    function examples() {
+      $('pairs').replaceChildren(...d.examples.map((p) => el('div', { class: 'pair' }, el('div', { text: p.question }), el('div', { class: 'sim', text: p.similarity.toFixed(3) }), el('div', { class: 'from', text: `answered with the reply to: ${p.served_for}` }))));
+      const w = d.summary.wrong_examples;
+      const s = d.embedders[d.summary.best].replay;
+      const distinct = [...new Map(w.map((x) => [x.question + x.served_for, x])).values()];
+      $('wrong').replaceChildren(
+        el('p', { style: 'margin:0 0 10px;color:var(--muted);font-size:14px', text: `${s.wrong_semantic} of ${s.semantic_hits} paraphrase hits in the replay went to a question labelled with a different intent. All of them are one question, asked ${w.length} times:` }),
+        ...distinct.map((x) => el('div', { class: 'pair' }, el('div', { text: `${x.question}  (labelled ${x.intent})` }), el('div', { class: 'sim', text: x.similarity.toFixed(3) }), el('div', { class: 'from', text: `answered with the reply to: ${x.served_for}  (labelled ${x.served_intent})` }))),
+        el('p', { style: 'margin:10px 0 0;font-size:14px', text: 'Banking77 files "How can I top-up my card?" under top-ups by cash or cheque. The answer it got, about topping up by card, is arguably the right one. It still counts as wrong here: the labels are the only judge this page uses.' }));
+    }
+
+    function assumptions() {
+      const a = d.summary.assumptions;
+      const items = [
+        'Measured: which questions the cache answered, which of those answers were written for a different intent, leaked, or stale, and how long embedding and lookup took on one CPU.',
+        `Assumed: a frontier model at $${a.price_per_million.input} and $${a.price_per_million.output} per million input and output tokens, a ${a.system_tokens.toLocaleString()}-token system block that a provider prefix cache bills at ${a.prefix_read * 100}%, and replies taking ${a.llm_latency_s.median} s at the median and ${a.llm_latency_s.p95} s at the 95th percentile.`,
+        `Traffic: ${d.queries.toLocaleString()} questions from Banking77's test set arriving at ${a.questions_per_month.toLocaleString()} a month, most common intents first on a Zipf curve, from 500 customers on three tiers.`,
+        'The threshold and the agreement check were chosen on training questions only and then measured on test questions.',
+      ];
+      $('assumptions').replaceChildren(...items.map((t) => el('li', { text: t })));
+    }
+
+    fetch('data.json').then((r) => r.json()).then((data) => { d = data; kpis(); dayChart(); thresholds(); variants(); examples(); assumptions(); })
+      .catch((err) => { console.error(err); $('kpis').textContent = 'Could not load the results.'; });
+  </script>
+</body>
+</html>

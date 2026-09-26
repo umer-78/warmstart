@@ -1,0 +1,1285 @@
+{
+ "embedders": {
+  "bge-small": {
+   "setting": {
+    "threshold": 0.96,
+    "neighbours": 10,
+    "band": 0.08
+   },
+   "embed_ms": 4.24,
+   "held_out": {
+    "coverage": 0.437,
+    "hits": 1346,
+    "wrong": 6,
+    "wrong_rate": 0.0045,
+    "wrong_ci": [
+     0.002,
+     0.0097
+    ],
+    "without_agreement": {
+     "coverage": 0.513,
+     "hits": 1580,
+     "wrong": 44,
+     "wrong_rate": 0.0278
+    }
+   },
+   "curve": [
+    {
+     "threshold": 0.8,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9974,
+     "hits": 3072,
+     "wrong": 218,
+     "wrong_rate": 0.071
+    },
+    {
+     "threshold": 0.81,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9964,
+     "hits": 3069,
+     "wrong": 218,
+     "wrong_rate": 0.071
+    },
+    {
+     "threshold": 0.82,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9948,
+     "hits": 3064,
+     "wrong": 217,
+     "wrong_rate": 0.0708
+    },
+    {
+     "threshold": 0.83,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9903,
+     "hits": 3050,
+     "wrong": 213,
+     "wrong_rate": 0.0698
+    },
+    {
+     "threshold": 0.84,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9841,
+     "hits": 3031,
+     "wrong": 207,
+     "wrong_rate": 0.0683
+    },
+    {
+     "threshold": 0.85,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9789,
+     "hits": 3015,
+     "wrong": 202,
+     "wrong_rate": 0.067
+    },
+    {
+     "threshold": 0.86,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9718,
+     "hits": 2993,
+     "wrong": 194,
+     "wrong_rate": 0.0648
+    },
+    {
+     "threshold": 0.87,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9633,
+     "hits": 2967,
+     "wrong": 184,
+     "wrong_rate": 0.062
+    },
+    {
+     "threshold": 0.88,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.951,
+     "hits": 2929,
+     "wrong": 177,
+     "wrong_rate": 0.0604
+    },
+    {
+     "threshold": 0.89,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9334,
+     "hits": 2875,
+     "wrong": 166,
+     "wrong_rate": 0.0577
+    },
+    {
+     "threshold": 0.9,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.9058,
+     "hits": 2790,
+     "wrong": 142,
+     "wrong_rate": 0.0509
+    },
+    {
+     "threshold": 0.91,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.8747,
+     "hits": 2694,
+     "wrong": 127,
+     "wrong_rate": 0.0471
+    },
+    {
+     "threshold": 0.92,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.8286,
+     "hits": 2552,
+     "wrong": 110,
+     "wrong_rate": 0.0431
+    },
+    {
+     "threshold": 0.93,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.7744,
+     "hits": 2385,
+     "wrong": 90,
+     "wrong_rate": 0.0377
+    },
+    {
+     "threshold": 0.94,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.6997,
+     "hits": 2155,
+     "wrong": 73,
+     "wrong_rate": 0.0339
+    },
+    {
+     "threshold": 0.95,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.6172,
+     "hits": 1901,
+     "wrong": 61,
+     "wrong_rate": 0.0321
+    },
+    {
+     "threshold": 0.96,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.513,
+     "hits": 1580,
+     "wrong": 44,
+     "wrong_rate": 0.0278
+    },
+    {
+     "threshold": 0.97,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.3942,
+     "hits": 1214,
+     "wrong": 31,
+     "wrong_rate": 0.0255
+    },
+    {
+     "threshold": 0.98,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.2536,
+     "hits": 781,
+     "wrong": 13,
+     "wrong_rate": 0.0166
+    },
+    {
+     "threshold": 0.99,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.1006,
+     "hits": 310,
+     "wrong": 5,
+     "wrong_rate": 0.0161
+    },
+    {
+     "threshold": 0.8,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7244,
+     "hits": 2231,
+     "wrong": 16,
+     "wrong_rate": 0.0072
+    },
+    {
+     "threshold": 0.81,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7244,
+     "hits": 2231,
+     "wrong": 16,
+     "wrong_rate": 0.0072
+    },
+    {
+     "threshold": 0.82,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.724,
+     "hits": 2230,
+     "wrong": 16,
+     "wrong_rate": 0.0072
+    },
+    {
+     "threshold": 0.83,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7221,
+     "hits": 2224,
+     "wrong": 16,
+     "wrong_rate": 0.0072
+    },
+    {
+     "threshold": 0.84,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7201,
+     "hits": 2218,
+     "wrong": 16,
+     "wrong_rate": 0.0072
+    },
+    {
+     "threshold": 0.85,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7195,
+     "hits": 2216,
+     "wrong": 16,
+     "wrong_rate": 0.0072
+    },
+    {
+     "threshold": 0.86,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7179,
+     "hits": 2211,
+     "wrong": 15,
+     "wrong_rate": 0.0068
+    },
+    {
+     "threshold": 0.87,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7146,
+     "hits": 2201,
+     "wrong": 13,
+     "wrong_rate": 0.0059
+    },
+    {
+     "threshold": 0.88,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7104,
+     "hits": 2188,
+     "wrong": 13,
+     "wrong_rate": 0.0059
+    },
+    {
+     "threshold": 0.89,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7042,
+     "hits": 2169,
+     "wrong": 12,
+     "wrong_rate": 0.0055
+    },
+    {
+     "threshold": 0.9,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6932,
+     "hits": 2135,
+     "wrong": 12,
+     "wrong_rate": 0.0056
+    },
+    {
+     "threshold": 0.91,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6763,
+     "hits": 2083,
+     "wrong": 12,
+     "wrong_rate": 0.0058
+    },
+    {
+     "threshold": 0.92,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6536,
+     "hits": 2013,
+     "wrong": 12,
+     "wrong_rate": 0.006
+    },
+    {
+     "threshold": 0.93,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6244,
+     "hits": 1923,
+     "wrong": 12,
+     "wrong_rate": 0.0062
+    },
+    {
+     "threshold": 0.94,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.5756,
+     "hits": 1773,
+     "wrong": 10,
+     "wrong_rate": 0.0056
+    },
+    {
+     "threshold": 0.95,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.5153,
+     "hits": 1587,
+     "wrong": 8,
+     "wrong_rate": 0.005
+    },
+    {
+     "threshold": 0.96,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.437,
+     "hits": 1346,
+     "wrong": 6,
+     "wrong_rate": 0.0045
+    },
+    {
+     "threshold": 0.97,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.3399,
+     "hits": 1047,
+     "wrong": 5,
+     "wrong_rate": 0.0048
+    },
+    {
+     "threshold": 0.98,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.2234,
+     "hits": 688,
+     "wrong": 3,
+     "wrong_rate": 0.0044
+    },
+    {
+     "threshold": 0.99,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.0903,
+     "hits": 278,
+     "wrong": 1,
+     "wrong_rate": 0.0036
+    }
+   ],
+   "replay": {
+    "queries": 10000,
+    "hours": 18.0,
+    "hit_rate": 0.2944,
+    "exact_rate": 0.2328,
+    "semantic_rate": 0.0616,
+    "semantic_hits": 616,
+    "wrong_semantic": 4,
+    "wrong_rate": 0.0065,
+    "wrong_ci": [
+     0.0025,
+     0.0166
+    ],
+    "wrong_exact": 0,
+    "leaks": 0,
+    "stale": 0,
+    "disagreed": 114,
+    "near_misses": 729,
+    "near_misses_right": 723,
+    "personal_share": 0.438,
+    "general_hit_rate": 0.5167,
+    "cost_per_1000": {
+     "no cache": 6.72,
+     "provider prefix cache": 3.48,
+     "this cache": 4.89,
+     "this cache + prefix cache": 2.61
+    },
+    "latency_s": {
+     "no cache": {
+      "p50": 1.592,
+      "p95": 3.988
+     },
+     "cache": {
+      "p50": 1.187,
+      "p95": 3.631
+     },
+     "cache hit": {
+      "p50": 0.004
+     }
+    }
+   }
+  },
+  "minilm": {
+   "setting": {
+    "threshold": 0.95,
+    "neighbours": 10,
+    "band": 0.08
+   },
+   "embed_ms": 2.56,
+   "held_out": {
+    "coverage": 0.2812,
+    "hits": 866,
+    "wrong": 9,
+    "wrong_rate": 0.0104,
+    "wrong_ci": [
+     0.0055,
+     0.0196
+    ],
+    "without_agreement": {
+     "coverage": 0.3055,
+     "hits": 941,
+     "wrong": 24,
+     "wrong_rate": 0.0255
+    }
+   },
+   "curve": [
+    {
+     "threshold": 0.8,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.8938,
+     "hits": 2753,
+     "wrong": 153,
+     "wrong_rate": 0.0556
+    },
+    {
+     "threshold": 0.81,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.8782,
+     "hits": 2705,
+     "wrong": 145,
+     "wrong_rate": 0.0536
+    },
+    {
+     "threshold": 0.82,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.861,
+     "hits": 2652,
+     "wrong": 136,
+     "wrong_rate": 0.0513
+    },
+    {
+     "threshold": 0.83,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.8347,
+     "hits": 2571,
+     "wrong": 123,
+     "wrong_rate": 0.0478
+    },
+    {
+     "threshold": 0.84,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.8101,
+     "hits": 2495,
+     "wrong": 114,
+     "wrong_rate": 0.0457
+    },
+    {
+     "threshold": 0.85,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.7838,
+     "hits": 2414,
+     "wrong": 103,
+     "wrong_rate": 0.0427
+    },
+    {
+     "threshold": 0.86,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.7529,
+     "hits": 2319,
+     "wrong": 97,
+     "wrong_rate": 0.0418
+    },
+    {
+     "threshold": 0.87,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.7211,
+     "hits": 2221,
+     "wrong": 88,
+     "wrong_rate": 0.0396
+    },
+    {
+     "threshold": 0.88,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.6873,
+     "hits": 2117,
+     "wrong": 80,
+     "wrong_rate": 0.0378
+    },
+    {
+     "threshold": 0.89,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.6519,
+     "hits": 2008,
+     "wrong": 72,
+     "wrong_rate": 0.0359
+    },
+    {
+     "threshold": 0.9,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.6036,
+     "hits": 1859,
+     "wrong": 67,
+     "wrong_rate": 0.036
+    },
+    {
+     "threshold": 0.91,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.5591,
+     "hits": 1722,
+     "wrong": 56,
+     "wrong_rate": 0.0325
+    },
+    {
+     "threshold": 0.92,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.4984,
+     "hits": 1535,
+     "wrong": 50,
+     "wrong_rate": 0.0326
+    },
+    {
+     "threshold": 0.93,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.439,
+     "hits": 1352,
+     "wrong": 43,
+     "wrong_rate": 0.0318
+    },
+    {
+     "threshold": 0.94,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.3731,
+     "hits": 1149,
+     "wrong": 32,
+     "wrong_rate": 0.0279
+    },
+    {
+     "threshold": 0.95,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.3055,
+     "hits": 941,
+     "wrong": 24,
+     "wrong_rate": 0.0255
+    },
+    {
+     "threshold": 0.96,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.2351,
+     "hits": 724,
+     "wrong": 19,
+     "wrong_rate": 0.0262
+    },
+    {
+     "threshold": 0.97,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.1734,
+     "hits": 534,
+     "wrong": 12,
+     "wrong_rate": 0.0225
+    },
+    {
+     "threshold": 0.98,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.0977,
+     "hits": 301,
+     "wrong": 8,
+     "wrong_rate": 0.0266
+    },
+    {
+     "threshold": 0.99,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.0325,
+     "hits": 100,
+     "wrong": 1,
+     "wrong_rate": 0.01
+    },
+    {
+     "threshold": 0.8,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7432,
+     "hits": 2289,
+     "wrong": 35,
+     "wrong_rate": 0.0153
+    },
+    {
+     "threshold": 0.81,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7354,
+     "hits": 2265,
+     "wrong": 35,
+     "wrong_rate": 0.0155
+    },
+    {
+     "threshold": 0.82,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7263,
+     "hits": 2237,
+     "wrong": 34,
+     "wrong_rate": 0.0152
+    },
+    {
+     "threshold": 0.83,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.7114,
+     "hits": 2191,
+     "wrong": 30,
+     "wrong_rate": 0.0137
+    },
+    {
+     "threshold": 0.84,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6971,
+     "hits": 2147,
+     "wrong": 29,
+     "wrong_rate": 0.0135
+    },
+    {
+     "threshold": 0.85,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6802,
+     "hits": 2095,
+     "wrong": 28,
+     "wrong_rate": 0.0134
+    },
+    {
+     "threshold": 0.86,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6558,
+     "hits": 2020,
+     "wrong": 28,
+     "wrong_rate": 0.0139
+    },
+    {
+     "threshold": 0.87,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6328,
+     "hits": 1949,
+     "wrong": 26,
+     "wrong_rate": 0.0133
+    },
+    {
+     "threshold": 0.88,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.6075,
+     "hits": 1871,
+     "wrong": 24,
+     "wrong_rate": 0.0128
+    },
+    {
+     "threshold": 0.89,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.5786,
+     "hits": 1782,
+     "wrong": 23,
+     "wrong_rate": 0.0129
+    },
+    {
+     "threshold": 0.9,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.537,
+     "hits": 1654,
+     "wrong": 19,
+     "wrong_rate": 0.0115
+    },
+    {
+     "threshold": 0.91,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.4997,
+     "hits": 1539,
+     "wrong": 16,
+     "wrong_rate": 0.0104
+    },
+    {
+     "threshold": 0.92,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.4484,
+     "hits": 1381,
+     "wrong": 15,
+     "wrong_rate": 0.0109
+    },
+    {
+     "threshold": 0.93,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.3977,
+     "hits": 1225,
+     "wrong": 14,
+     "wrong_rate": 0.0114
+    },
+    {
+     "threshold": 0.94,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.3406,
+     "hits": 1049,
+     "wrong": 13,
+     "wrong_rate": 0.0124
+    },
+    {
+     "threshold": 0.95,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.2812,
+     "hits": 866,
+     "wrong": 9,
+     "wrong_rate": 0.0104
+    },
+    {
+     "threshold": 0.96,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.2166,
+     "hits": 667,
+     "wrong": 6,
+     "wrong_rate": 0.009
+    },
+    {
+     "threshold": 0.97,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.1604,
+     "hits": 494,
+     "wrong": 3,
+     "wrong_rate": 0.0061
+    },
+    {
+     "threshold": 0.98,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.0912,
+     "hits": 281,
+     "wrong": 1,
+     "wrong_rate": 0.0036
+    },
+    {
+     "threshold": 0.99,
+     "neighbours": 10,
+     "band": 0.08,
+     "coverage": 0.0312,
+     "hits": 96,
+     "wrong": 0,
+     "wrong_rate": 0.0
+    }
+   ],
+   "replay": {
+    "queries": 10000,
+    "hours": 18.0,
+    "hit_rate": 0.2779,
+    "exact_rate": 0.251,
+    "semantic_rate": 0.0269,
+    "semantic_hits": 269,
+    "wrong_semantic": 0,
+    "wrong_rate": 0.0,
+    "wrong_ci": [
+     0.0,
+     0.0141
+    ],
+    "wrong_exact": 0,
+    "leaks": 0,
+    "stale": 0,
+    "disagreed": 23,
+    "near_misses": 270,
+    "near_misses_right": 266,
+    "personal_share": 0.438,
+    "general_hit_rate": 0.4895,
+    "cost_per_1000": {
+     "no cache": 6.72,
+     "provider prefix cache": 3.48,
+     "this cache": 5.0,
+     "this cache + prefix cache": 2.66
+    },
+    "latency_s": {
+     "no cache": {
+      "p50": 1.592,
+      "p95": 3.988
+     },
+     "cache": {
+      "p50": 1.213,
+      "p95": 3.657
+     },
+     "cache hit": {
+      "p50": 0.003
+     }
+    }
+   }
+  },
+  "tfidf": {
+   "setting": {
+    "threshold": 0.99,
+    "neighbours": 1,
+    "band": 0.0
+   },
+   "embed_ms": 16.09,
+   "held_out": {
+    "coverage": 0.0179,
+    "hits": 55,
+    "wrong": 2,
+    "wrong_rate": 0.0364,
+    "wrong_ci": [
+     0.01,
+     0.1232
+    ],
+    "without_agreement": {
+     "coverage": 0.0179,
+     "hits": 55,
+     "wrong": 2,
+     "wrong_rate": 0.0364
+    }
+   },
+   "curve": [
+    {
+     "threshold": 0.8,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.5636,
+     "hits": 1736,
+     "wrong": 146,
+     "wrong_rate": 0.0841
+    },
+    {
+     "threshold": 0.81,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.536,
+     "hits": 1651,
+     "wrong": 134,
+     "wrong_rate": 0.0812
+    },
+    {
+     "threshold": 0.82,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.5032,
+     "hits": 1550,
+     "wrong": 124,
+     "wrong_rate": 0.08
+    },
+    {
+     "threshold": 0.83,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.4753,
+     "hits": 1464,
+     "wrong": 114,
+     "wrong_rate": 0.0779
+    },
+    {
+     "threshold": 0.84,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.4477,
+     "hits": 1379,
+     "wrong": 99,
+     "wrong_rate": 0.0718
+    },
+    {
+     "threshold": 0.85,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.4136,
+     "hits": 1274,
+     "wrong": 83,
+     "wrong_rate": 0.0651
+    },
+    {
+     "threshold": 0.86,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.3844,
+     "hits": 1184,
+     "wrong": 78,
+     "wrong_rate": 0.0659
+    },
+    {
+     "threshold": 0.87,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.3571,
+     "hits": 1100,
+     "wrong": 71,
+     "wrong_rate": 0.0645
+    },
+    {
+     "threshold": 0.88,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.3244,
+     "hits": 999,
+     "wrong": 58,
+     "wrong_rate": 0.0581
+    },
+    {
+     "threshold": 0.89,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.2964,
+     "hits": 913,
+     "wrong": 48,
+     "wrong_rate": 0.0526
+    },
+    {
+     "threshold": 0.9,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.2633,
+     "hits": 811,
+     "wrong": 40,
+     "wrong_rate": 0.0493
+    },
+    {
+     "threshold": 0.91,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.2321,
+     "hits": 715,
+     "wrong": 32,
+     "wrong_rate": 0.0448
+    },
+    {
+     "threshold": 0.92,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.1981,
+     "hits": 610,
+     "wrong": 26,
+     "wrong_rate": 0.0426
+    },
+    {
+     "threshold": 0.93,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.1636,
+     "hits": 504,
+     "wrong": 19,
+     "wrong_rate": 0.0377
+    },
+    {
+     "threshold": 0.94,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.1357,
+     "hits": 418,
+     "wrong": 15,
+     "wrong_rate": 0.0359
+    },
+    {
+     "threshold": 0.95,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.1088,
+     "hits": 335,
+     "wrong": 12,
+     "wrong_rate": 0.0358
+    },
+    {
+     "threshold": 0.96,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.0828,
+     "hits": 255,
+     "wrong": 9,
+     "wrong_rate": 0.0353
+    },
+    {
+     "threshold": 0.97,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.0604,
+     "hits": 186,
+     "wrong": 6,
+     "wrong_rate": 0.0323
+    },
+    {
+     "threshold": 0.98,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.0357,
+     "hits": 110,
+     "wrong": 2,
+     "wrong_rate": 0.0182
+    },
+    {
+     "threshold": 0.99,
+     "neighbours": 1,
+     "band": 0.0,
+     "coverage": 0.0179,
+     "hits": 55,
+     "wrong": 2,
+     "wrong_rate": 0.0364
+    }
+   ],
+   "replay": {
+    "queries": 10000,
+    "hours": 18.0,
+    "hit_rate": 0.2639,
+    "exact_rate": 0.2634,
+    "semantic_rate": 0.0005,
+    "semantic_hits": 5,
+    "wrong_semantic": 0,
+    "wrong_rate": 0.0,
+    "wrong_ci": [
+     0.0,
+     0.4345
+    ],
+    "wrong_exact": 0,
+    "leaks": 0,
+    "stale": 0,
+    "disagreed": 0,
+    "near_misses": 24,
+    "near_misses_right": 24,
+    "personal_share": 0.438,
+    "general_hit_rate": 0.466,
+    "cost_per_1000": {
+     "no cache": 6.72,
+     "provider prefix cache": 3.48,
+     "this cache": 5.08,
+     "this cache + prefix cache": 2.7
+    },
+    "latency_s": {
+     "no cache": {
+      "p50": 1.592,
+      "p95": 3.988
+     },
+     "cache": {
+      "p50": 1.25,
+      "p95": 3.682
+     },
+     "cache hit": {
+      "p50": 0.016
+     }
+    }
+   }
+  }
+ },
+ "assumptions": {
+  "price_per_million": {
+   "input": 3.0,
+   "output": 15.0
+  },
+  "system_tokens": 1200,
+  "prefix_read": 0.1,
+  "llm_latency_s": {
+   "median": 1.6,
+   "p95": 4.0
+  },
+  "questions_per_month": 400000
+ },
+ "best": "bge-small",
+ "prompt_change": {
+  "before": 0.43,
+  "after": 0.0367,
+  "served_from_before": 0
+ },
+ "fee_change": {
+  "before": 0.3067,
+  "after": 0.19,
+  "served_from_before": 0
+ },
+ "variants": {
+  "exact layer only": {
+   "queries": 10000,
+   "hours": 18.0,
+   "hit_rate": 0.2636,
+   "exact_rate": 0.2636,
+   "semantic_rate": 0.0,
+   "semantic_hits": 0,
+   "wrong_semantic": 0,
+   "wrong_rate": 0.0,
+   "wrong_ci": [
+    0.0,
+    0.0
+   ],
+   "wrong_exact": 0,
+   "leaks": 0,
+   "stale": 0,
+   "disagreed": 0,
+   "near_misses": 1052,
+   "near_misses_right": 1045,
+   "personal_share": 0.438,
+   "general_hit_rate": 0.4655,
+   "cost_per_1000": {
+    "no cache": 6.72,
+    "provider prefix cache": 3.48,
+    "this cache": 5.09,
+    "this cache + prefix cache": 2.7
+   },
+   "latency_s": {
+    "no cache": {
+     "p50": 1.592,
+     "p95": 3.988
+    },
+    "cache": {
+     "p50": 1.24,
+     "p95": 3.67
+    },
+    "cache hit": {
+     "p50": 0.004
+    }
+   }
+  },
+  "similarity floor, no agreement check": {
+   "queries": 10000,
+   "hours": 18.0,
+   "hit_rate": 0.305,
+   "exact_rate": 0.2257,
+   "semantic_rate": 0.0793,
+   "semantic_hits": 793,
+   "wrong_semantic": 5,
+   "wrong_rate": 0.0063,
+   "wrong_ci": [
+    0.0027,
+    0.0147
+   ],
+   "wrong_exact": 0,
+   "leaks": 0,
+   "stale": 0,
+   "disagreed": 0,
+   "near_misses": 623,
+   "near_misses_right": 618,
+   "personal_share": 0.438,
+   "general_hit_rate": 0.5356,
+   "cost_per_1000": {
+    "no cache": 6.72,
+    "provider prefix cache": 3.48,
+    "this cache": 4.83,
+    "this cache + prefix cache": 2.57
+   },
+   "latency_s": {
+    "no cache": {
+     "p50": 1.592,
+     "p95": 3.988
+    },
+    "cache": {
+     "p50": 1.164,
+     "p95": 3.609
+    },
+    "cache hit": {
+     "p50": 0.004
+    }
+   }
+  },
+  "keyed on the question alone": {
+   "queries": 10000,
+   "hours": 18.0,
+   "hit_rate": 0.6899,
+   "exact_rate": 0.5135,
+   "semantic_rate": 0.1764,
+   "semantic_hits": 1764,
+   "wrong_semantic": 13,
+   "wrong_rate": 0.0074,
+   "wrong_ci": [
+    0.0043,
+    0.0126
+   ],
+   "wrong_exact": 0,
+   "leaks": 2465,
+   "stale": 2408,
+   "disagreed": 0,
+   "near_misses": 718,
+   "near_misses_right": 698,
+   "personal_share": 0.438,
+   "general_hit_rate": 0.7863,
+   "cost_per_1000": {
+    "no cache": 6.72,
+    "provider prefix cache": 3.48,
+    "this cache": 2.15,
+    "this cache + prefix cache": 1.15
+   },
+   "latency_s": {
+    "no cache": {
+     "p50": 1.592,
+     "p95": 3.988
+    },
+    "cache": {
+     "p50": 0.004,
+     "p95": 2.862
+    },
+    "cache hit": {
+     "p50": 0.004
+    }
+   }
+  }
+ },
+ "wrong_examples": [
+  {
+   "question": "How can I top-up my card?",
+   "intent": "top_up_by_cash_or_cheque",
+   "served_for": "How can I top up my account with a card?",
+   "served_intent": "topping_up_by_card",
+   "similarity": 0.961
+  },
+  {
+   "question": "How can I top-up my card?",
+   "intent": "top_up_by_cash_or_cheque",
+   "served_for": "How can I top up by card?",
+   "served_intent": "topping_up_by_card",
+   "similarity": 0.9681
+  },
+  {
+   "question": "How can I top-up my card?",
+   "intent": "top_up_by_cash_or_cheque",
+   "served_for": "How can I top up by card?",
+   "served_intent": "topping_up_by_card",
+   "similarity": 0.9681
+  },
+  {
+   "question": "How can I top-up my card?",
+   "intent": "top_up_by_cash_or_cheque",
+   "served_for": "How can I top up by card?",
+   "served_intent": "topping_up_by_card",
+   "similarity": 0.9681
+  }
+ ],
+ "seconds": 393.8
+}
