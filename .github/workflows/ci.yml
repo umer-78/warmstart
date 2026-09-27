@@ -19,8 +19,22 @@ jobs:
           path: ~/.cache/warmstart
           key: warmstart-data-${{ hashFiles('warmstart/data.py') }}
       - run: pip install -e '.[dev]'
-      - name: Unit tests
-        run: pytest -q
+      # The change on this branch is one the unit tests exist to catch: this step passes only when
+      # exactly these tests fail, and fails if they pass or if anything else breaks.
+      - name: Unit tests (must catch this change)
+        shell: bash
+        run: |
+          set +e
+          pytest -q -rf 2>&1 | tee tests.log
+          set -e
+          expected=$(sort <<'LIST'
+            tests/test_warmstart.py::test_keying_on_the_question_alone_leaks_account_answers_and_the_full_key_does_not
+          LIST
+          )
+          expected=$(sed 's/^ *//' <<< "$expected" | sort)
+          got=$(grep -oE '^FAILED [^ ]+' tests.log | cut -d' ' -f2 | sort)
+          if [ "$got" != "$expected" ]; then echo "::error::expected exactly the guarding tests to fail, got: $got"; exit 1; fi
+          echo "::notice::The unit tests caught this change."
       # This branch is a demonstration: it carries answers shared across customers, which the gate exists to refuse. The job
       # passes only when the gate fails it for that reason, and fails if the gate lets it through.
       - name: Gate (must refuse this change)
