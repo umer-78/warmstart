@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-scene="cache">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,14 +62,21 @@
     footer { margin-top: 30px; color: var(--muted); font-size: 13px; text-align: center; }
     @media (max-width: 640px) { .card { padding: 16px; } }
   </style>
+<!-- fx:v2 -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="fx.css">
+<style>:root { --fx-2: #06b6d4; --fx-3: #f59e0b; }</style>
+<!-- /fx:v2 -->
 </head>
 <body>
   <div class="wrap">
+    <!-- fx:v2 --><nav class="fx-nav" aria-label="On this page"><a class="fx-home" href="https://umer-78.github.io/">← All projects</a><a class="fx-gh" href="https://github.com/umer-78/warmstart">GitHub</a></nav><!-- /fx:v2 -->
     <header>
-      <a class="crumb" href="https://umer-78.github.io/">← All projects</a>
+      <span class="fx-eyebrow">LLM engineering · Python</span>
       <h1>Warmstart</h1>
       <p class="lede">A cache in front of a bank's AI support assistant, which answers 400,000 questions a month. It answers exact repeats and close paraphrases from the cache, keeps each customer's account answers to that customer, and empties itself when the prompt or the fees change. Below: 10,000 real support questions replayed through it.</p>
       <div class="links"><a class="btn primary" href="#threshold">How wrong can it afford to be?</a><a class="btn" href="https://github.com/umer-78/warmstart">Code and method</a></div>
+      <div class="fx-tags" aria-hidden="true"><div><span>python</span><span>llm</span><span>caching</span><span>embeddings</span><span>onnx</span><span>cost</span><span>python</span><span>llm</span><span>caching</span><span>embeddings</span><span>onnx</span><span>cost</span></div></div>
     </header>
 
     <div class="kpis" id="kpis"></div>
@@ -235,5 +242,6 @@
     fetch('data.json').then((r) => r.json()).then((data) => { d = data; kpis(); dayChart(); thresholds(); variants(); examples(); assumptions(); })
       .catch((err) => { console.error(err); $('kpis').textContent = 'Could not load the results.'; });
   </script>
+<!-- fx:v2 --><script type="module" src="fx.js"></script><!-- /fx:v2 -->
 </body>
 </html>
