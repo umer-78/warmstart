@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/umer-78/warmstart/actions/workflows/ci.yml/badge.svg)](https://github.com/umer-78/warmstart/actions/workflows/ci.yml)
 
+[![Warmstart: the live demo](.github/preview.jpg)](https://umer-78.github.io/warmstart/)
+
 **Live dashboard:** https://umer-78.github.io/warmstart/ (hit rate through the day, the threshold
 trade-off with a slider, every variant, and the wrong answers it served)
 
