@@ -126,3 +126,15 @@ svg circle.fx-pop { transform-box: fill-box; transform-origin: center; animation
 html[data-fx-compact] .fx-hero { min-height: clamp(250px, 34vh, 360px); gap: 12px; }
 .fx-hero > h1 { font-size: clamp(34px, 5.6vw, 64px); letter-spacing: -.035em; line-height: 1.04; }
 .fx-hero.top .fx-tags { max-width: min(600px, 54%); }
+
+/* older demos' own header rules centre their content in a row; as a hero it reads left to right */
+header.top.fx-hero { display: flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start; justify-content: center; text-align: left; gap: 14px; padding: var(--pad); }
+header.top.fx-hero > .brand { display: flex; align-items: center; gap: 16px; margin: 0; text-align: left; }
+header.top.fx-hero > .brand h1 { margin: 0 0 4px; font-size: clamp(28px, 4.2vw, 46px); line-height: 1.05; letter-spacing: -.03em; }
+header.top.fx-hero > .brand .sub, header.top.fx-hero > .brand p { max-width: 52ch; }
+header.top.fx-hero > .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 0; justify-content: flex-start; }
+html[data-fx-compact] .fx-scene { inset: 0 0 0 44%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 34%); mask-image: linear-gradient(90deg, transparent, #000 34%); }
+@media (max-width: 760px) { html[data-fx-compact] .fx-scene { inset: auto; height: 190px; -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent); mask-image: linear-gradient(180deg, #000 60%, transparent); } }
+/* while someone types, the dock steps aside so it never covers a field */
+body:has(input:focus, textarea:focus, select:focus, [contenteditable]:focus) .fx-dock { opacity: 0; pointer-events: none; transform: translateY(12px); }
+.fx-dock { transition: opacity .25s, transform .3s var(--fx-ease); }
