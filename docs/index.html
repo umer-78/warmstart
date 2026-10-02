@@ -119,6 +119,39 @@
       <div class="pairs" id="pairs"></div>
     </section>
 
+    <section class="card" id="live" aria-labelledby="h-live">
+      <style>
+        #live textarea { width: 100%; box-sizing: border-box; font: 15px/1.5 var(--font); padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); color: var(--text); resize: vertical; }
+        #live textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+        .c-slider { display: flex; align-items: center; gap: 10px; margin: 12px 0 4px; font-size: 14px; color: var(--muted); }
+        .c-slider input { flex: 1; max-width: 260px; accent-color: var(--accent); }
+        .c-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 11px 0 2px; }
+        .c-ex { font: 500 13px var(--font); padding: 6px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); cursor: pointer; text-align: left; }
+        .c-ex:hover { color: var(--text); border-color: var(--accent); }
+        .c-out { margin-top: 15px; }
+        .c-empty { color: var(--muted); font-size: 14px; margin: 0; }
+        .c-verdict { display: inline-block; font: 700 12px/1 var(--font); letter-spacing: .05em; padding: 6px 11px; border-radius: 999px; }
+        .c-verdict.exact { color: #fff; background: var(--exact); } .c-verdict.semantic { color: #fff; background: var(--semantic); }
+        .c-verdict.miss { color: var(--muted); background: var(--surface-2); border: 1px solid var(--line); }
+        .c-head { font-weight: 600; margin: 10px 0 12px; }
+        .c-row { display: flex; align-items: center; gap: 11px; flex-wrap: wrap; margin: 9px 0; font-size: 14px; }
+        .c-k { color: var(--muted); min-width: 190px; flex: none; }
+        @media (max-width: 560px) { .c-k { min-width: 100%; } }
+        .c-match { font-style: italic; }
+        .c-bar { flex: 1; min-width: 110px; max-width: 240px; height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+        .c-fill { display: block; height: 100%; border-radius: 999px; }
+        .c-fill.exact { background: var(--exact); } .c-fill.semantic { background: var(--semantic); } .c-fill.miss { background: var(--muted); }
+        .c-floor, .c-sub { color: var(--muted); font-size: 12.5px; }
+        .c-good { color: var(--good); } .c-bad { color: var(--bad); }
+      </style>
+      <h2 id="h-live">Ask it yourself — hit or miss?</h2>
+      <p class="sub">The cache running live in your browser over the project's own cached questions, matched with TF-IDF cosine similarity (one of the three embedders measured above). No server, no key. Try a reworded repeat, then move the floor.</p>
+      <textarea id="c-in" rows="2" spellcheck="false" placeholder="e.g. I can't find the auto top-up option in the app"></textarea>
+      <div class="c-slider"><label for="c-th">Similarity floor</label><input id="c-th" type="range" min="10" max="70" step="1" value="28"><b id="c-th-val"></b></div>
+      <div class="c-chips" aria-label="Examples" id="c-chips"></div>
+      <div class="c-out" id="c-out"></div>
+    </section>
+
     <section class="card" aria-labelledby="h-wrong">
       <h2 id="h-wrong">The wrong ones</h2>
       <div id="wrong"></div>
@@ -252,6 +285,7 @@
     fetch('data.json').then((r) => r.json()).then((data) => { d = data; kpis(); dayChart(); thresholds(); variants(); examples(); assumptions(); })
       .catch((err) => { console.error(err); $('kpis').textContent = 'Could not load the results.'; });
   </script>
+  <script src="cache-live.js"></script>
 <!-- fx:v2 --><script type="module" src="fx.js"></script><!-- /fx:v2 -->
 </body>
 </html>
