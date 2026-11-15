@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-scene="cache">
+<html lang="en" data-scene="cache" data-look="outfit" data-hero="left" data-card="solid" data-motif="topo" data-backdrop="motes">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,7 +63,7 @@
     @media (max-width: 640px) { .card { padding: 16px; } }
   </style>
 <!-- fx:v2 -->
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&family=Fira+Code:wght@400;600&display=swap" id="fx-fonts">
 <link rel="stylesheet" href="fx.css">
 <style>:root { --fx-2: #06b6d4; --fx-3: #f59e0b; }</style>
 <!-- /fx:v2 -->
@@ -77,6 +77,13 @@
 <meta property="og:image:alt" content="Warmstart: a semantic cache, measured: the live demo">
 <meta name="twitter:card" content="summary_large_image">
 <!-- /og -->
+<meta name="theme-color" content="#128281" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#041212" media="(prefers-color-scheme: dark)">
+<style id="fx-look">:root[data-look] { --font: 'Outfit', system-ui, -apple-system, "Segoe UI", sans-serif; --fx-display: 'Outfit', system-ui, sans-serif; --mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; --fx-display-weight: 700; --fx-tracking: -0.03em; --fx-title-case: none; --fx-radius: 16px; --fx-hero-radius: 26px; --fx-control-radius: 14px; --accent: #128281; --accent-hover: #106e6e; --accent-soft: #dcf9f8; --accent-glow: rgb(18 130 129 / 0.16); --on-accent: #ffffff; --fx-2: #b27916; --fx-3: #22a9f1; --bg: #f1fcfb; --bg-elevated: #fafffe; --surface: #fbffff; --surface-2: #e9f7f6; --surface-3: #e0efee; --border: #d1e2e1; --border-strong: #b6c8c8; --line: #d1e2e1; }
+@media (prefers-color-scheme: dark) { :root[data-look]:not([data-theme="light"]) { --accent: #02b0af; --accent-hover: #0ec5c4; --accent-soft: rgb(2 176 175 / 0.14); --accent-glow: rgb(2 176 175 / 0.2); --on-accent: #001616; --fx-2: #e5a239; --fx-3: #78c7fd; --bg: #041212; --bg-elevated: #091919; --surface: #0b1d1d; --surface-2: #132525; --surface-3: #1d2f2f; --border: #253433; --border-strong: #364645; --line: #253433; } }
+:root[data-look][data-theme="dark"] { --accent: #02b0af; --accent-hover: #0ec5c4; --accent-soft: rgb(2 176 175 / 0.14); --accent-glow: rgb(2 176 175 / 0.2); --on-accent: #001616; --fx-2: #e5a239; --fx-3: #78c7fd; --bg: #041212; --bg-elevated: #091919; --surface: #0b1d1d; --surface-2: #132525; --surface-3: #1d2f2f; --border: #253433; --border-strong: #364645; --line: #253433; }</style>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.min.js" data-fx>
+<link rel="modulepreload" href="fx3d.js" data-fx>
 </head>
 <body>
   <div class="wrap">
