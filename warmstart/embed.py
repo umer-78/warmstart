@@ -20,7 +20,7 @@ class OnnxEmbedder:
         import onnxruntime as ort
         from tokenizers import Tokenizer
         folder = data.model_dir(name)
-        _, _, _, onnx_file, self.pooling = data.MODELS[name]
+        _, onnx_file, self.pooling = data.MODELS[name]
         self.name = name
         self.tokenizer = Tokenizer.from_file(str(folder / "tokenizer.json"))
         self.tokenizer.enable_truncation(max_length=max_tokens)

@@ -4,14 +4,13 @@ sources, checked against SHA-256 and cached in WARMSTART_DATA (default ~/.cache/
 - Banking77 (Casanueva et al., 2020, CC BY 4.0): 13,083 customer-support questions to a
   digital bank, each labelled with one of 77 intents. Two questions with the same intent
   want the same answer; that label is how a wrong cache hit is caught.
-- bge-small-en-v1.5 (BAAI, MIT) and all-MiniLM-L6-v2 (Apache 2.0) as ONNX files, from the
-  bucket the fastembed library downloads from.
+- bge-small-en-v1.5 (BAAI, MIT) and all-MiniLM-L6-v2 (Apache 2.0) as the ONNX exports the
+  fastembed library uses, from Qdrant's Hugging Face repositories at pinned commits.
 """
 import csv
 import hashlib
-import io
 import os
-import tarfile
+import time
 import urllib.request
 from functools import lru_cache
 from pathlib import Path
@@ -21,11 +20,19 @@ SOURCES = {
     "train": (f"{BANKING77}/train.csv", "b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b"),
     "test": (f"{BANKING77}/test.csv", "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d"),
 }
-MODELS = {   # name: (url, sha256, folder in the archive, onnx file, pooling)
-    "bge-small": ("https://storage.googleapis.com/qdrant-fastembed/fast-bge-small-en-v1.5.tar.gz",
-                  "3858004b3822f64f940280874b8f2d2dc25b34a4f3eb3cdf617bdceeb21ed9ed", "fast-bge-small-en-v1.5", "model_optimized.onnx", "cls"),
-    "minilm": ("https://storage.googleapis.com/qdrant-fastembed/sentence-transformers-all-MiniLM-L6-v2.tar.gz",
-               "2735afe656e156af64ed603dbb1c96f3cae7f937286a8feb27fff7fa979f6a77", "fast-all-MiniLM-L6-v2", "model.onnx", "mean"),
+# The sentence embedders, as the ONNX exports the fastembed library uses, from Qdrant's Hugging Face
+# repositories at pinned commits. Each file is checked against its SHA-256. (They used to come as
+# tarballs from Qdrant's storage bucket, which no longer allows downloads.)
+HF_FILE = "https://huggingface.co/{repo}/resolve/{rev}/{name}"
+MODELS = {   # name: (where its files come from, onnx file, pooling)
+    "bge-small": ({"repo": "Qdrant/bge-small-en-v1.5-onnx-Q", "rev": "aa8f8b060edb00e03bfdd08813a2949946c8ba55",
+                   "folder": "fast-bge-small-en-v1.5",
+                   "files": {"tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66",
+                             "model_optimized.onnx": "51f1bd0addd6e859e42c2c8021a5e5461385bb676a649f4b269aa445449f2431"}}, "model_optimized.onnx", "cls"),
+    "minilm": ({"repo": "Qdrant/all-MiniLM-L6-v2-onnx", "rev": "d13954661f83248295ba75c1ed411eef3b7b936e",
+                "folder": "fast-all-MiniLM-L6-v2",
+                "files": {"tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+                          "model.onnx": "bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5"}}, "model.onnx", "mean"),
 }
 
 # Intents whose answer depends on the customer's own account: their card's delivery, their
@@ -77,11 +84,27 @@ def questions(split):
 
 
 def model_dir(name) -> Path:
-    url, sha, folder, _, _ = MODELS[name]
-    target = cache_dir() / folder
-    if not (target / "tokenizer.json").exists():
-        archive = download(url, sha, f"{folder}.tar.gz")
-        with tarfile.open(archive) as tar:
-            members = [m for m in tar.getmembers() if not Path(m.name).name.startswith("._")]
-            tar.extractall(cache_dir(), members=members, filter="data")
+    return model_files(MODELS[name][0])
+
+def model_files(spec, tries=4):
+    """The model's files in the cache, downloading any that are missing or do not match their SHA-256."""
+    target = cache_dir() / spec["folder"]
+    target.mkdir(parents=True, exist_ok=True)
+    for name, sha in spec["files"].items():
+        path = target / name
+        if path.exists() and hashlib.sha256(path.read_bytes()).hexdigest() == sha:
+            continue
+        url = HF_FILE.format(repo=spec["repo"], rev=spec["rev"], name=name)
+        for attempt in range(tries):
+            try:
+                with urllib.request.urlopen(url, timeout=300) as r:
+                    body = r.read()
+                break
+            except OSError:
+                if attempt == tries - 1:
+                    raise
+                time.sleep(2 ** attempt)
+        if hashlib.sha256(body).hexdigest() != sha:
+            raise RuntimeError(f"{spec['repo']}/{name}: the download does not match its pinned SHA-256")
+        path.write_bytes(body)
     return target
